@@ -1,11 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30709.64
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Api", "Sat.Recruitment.Api\Sat.Recruitment.Api.csproj", "{1F342EA2-E7B1-4E53-AB93-9C62288D3FB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.Test", "Sat.Recruitment.Test\Sat.Recruitment.Test.csproj", "{42E696E9-2672-4B91-AD96-353A69F7219C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Test", "Sat.Recruitment.Test\Sat.Recruitment.Test.csproj", "{42E696E9-2672-4B91-AD96-353A69F7219C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{A89D833D-68E0-4B9B-BDA7-9B6BF383C782}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{5D0AA145-8EB3-4069-A3B6-7C434990B953}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{A85614F3-2E40-4C7C-A03C-AA88734716C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.Domain", "Sat.Recruitment.Domain\Sat.Recruitment.Domain.csproj", "{F6F33ADF-3D3F-46D1-BE8E-A0A1E1AE4367}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.Application", "Sat.Recruitment.Application\Sat.Recruitment.Application.csproj", "{34EC367D-B9FD-4657-B977-65C85167CFE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.DataAccess", "Sat.Recruitment.DataAccess\Sat.Recruitment.DataAccess.csproj", "{C9A8F00B-8BB8-4BBE-B138-693E217F074B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.Infrastructure", "Sat.Recruitment.Infrastructure\Sat.Recruitment.Infrastructure.csproj", "{5206A8E2-A165-4FAF-B82D-58BA69745C88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +35,32 @@ Global
 		{42E696E9-2672-4B91-AD96-353A69F7219C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42E696E9-2672-4B91-AD96-353A69F7219C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42E696E9-2672-4B91-AD96-353A69F7219C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6F33ADF-3D3F-46D1-BE8E-A0A1E1AE4367}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6F33ADF-3D3F-46D1-BE8E-A0A1E1AE4367}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6F33ADF-3D3F-46D1-BE8E-A0A1E1AE4367}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6F33ADF-3D3F-46D1-BE8E-A0A1E1AE4367}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34EC367D-B9FD-4657-B977-65C85167CFE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34EC367D-B9FD-4657-B977-65C85167CFE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34EC367D-B9FD-4657-B977-65C85167CFE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34EC367D-B9FD-4657-B977-65C85167CFE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9A8F00B-8BB8-4BBE-B138-693E217F074B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9A8F00B-8BB8-4BBE-B138-693E217F074B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9A8F00B-8BB8-4BBE-B138-693E217F074B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9A8F00B-8BB8-4BBE-B138-693E217F074B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5206A8E2-A165-4FAF-B82D-58BA69745C88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5206A8E2-A165-4FAF-B82D-58BA69745C88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5206A8E2-A165-4FAF-B82D-58BA69745C88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5206A8E2-A165-4FAF-B82D-58BA69745C88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1F342EA2-E7B1-4E53-AB93-9C62288D3FB0} = {A89D833D-68E0-4B9B-BDA7-9B6BF383C782}
+		{F6F33ADF-3D3F-46D1-BE8E-A0A1E1AE4367} = {5D0AA145-8EB3-4069-A3B6-7C434990B953}
+		{34EC367D-B9FD-4657-B977-65C85167CFE5} = {5D0AA145-8EB3-4069-A3B6-7C434990B953}
+		{C9A8F00B-8BB8-4BBE-B138-693E217F074B} = {A85614F3-2E40-4C7C-A03C-AA88734716C3}
+		{5206A8E2-A165-4FAF-B82D-58BA69745C88} = {A85614F3-2E40-4C7C-A03C-AA88734716C3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A2A05765-05B9-484D-8D3D-506849EB716F}
