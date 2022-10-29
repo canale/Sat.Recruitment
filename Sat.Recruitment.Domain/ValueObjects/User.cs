@@ -1,12 +1,36 @@
-﻿namespace Sat.Recruitment.Domain.ValueObjects
+﻿using System.Net;
+using Sat.Recruitment.Domain.Enums;
+
+namespace Sat.Recruitment.Domain.ValueObjects
 {
     public class User
     {
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Address { get; set; }
-        public string Phone { get; set; }
-        public string UserType { get; set; }
-        public decimal Money { get; set; }
+        public Name Name { get; }
+        public Email Email { get; }
+        public Address Address { get; }
+        public Phone Phone { get; }
+        public UserType UserType { get; }
+        public Money Money { get; private set; }
+
+
+        public User(Name name, Email email, Address address, Phone phone, UserType userType, Money money)
+        {
+            Name = name;
+            Email = email;
+            Address = address;
+            Phone = phone;
+            UserType = userType;
+            Money = money;
+        }
+
+        /// <summary>
+        /// Allows to add reward by a percentage of users money.
+        /// </summary>
+        /// <param name="percentage">Percentage of current money that will be added to the User assets.</param>
+        public void AddRewardByPercentage(decimal percentage)
+        {
+            var reward = Money * percentage;
+            Money = Money + reward;
+        }
     }
 }
