@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Sat.Recruitment.Application.Services;
+using Sat.Recruitment.Domain;
 using Sat.Recruitment.Infrastructure.Contracts;
 using Sat.Recruitment.Infrastructure.Implementations;
 using Sat.Recruitment.Infrastructure.Settings;
@@ -31,12 +33,16 @@ namespace Sat.Recruitment.Api
             // Configuration
             services.Configure<FileSystemDataLoaderSettings>(Configuration.GetSection(nameof(FileSystemDataLoaderSettings)));
 
+            //Services
+            services.AddTransient<IUserApplicationService, UserApplicationService>();
+
             // Infrastructure
             services.AddTransient<IDataLoader, FileSystemDataLoader>();
             services.AddTransient<IPathBuilder, PathBuilder>();
 
             services.AddControllers();
             services.AddSwaggerGen();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
