@@ -6,42 +6,48 @@ namespace Sat.Recruitment.Infrastructure.Implementations
 {
     public class PathBuilder : IPathBuilder
     {
-        private string root = "";
-        private string fileName = "";
-        private string directory = "";
+        private string _root = "";
+        private string _fileName = "";
+        private string _directory = "";
 
         public PathBuilder()
         {
-            root = AppContext.BaseDirectory;
+            _root = AppContext.BaseDirectory;
         }
 
         public PathBuilder AddRoot(string root)
         {
-            this.root = root;
+            _root = root;
 
             return this;
         }
 
         public PathBuilder AddFileName(string fileName)
         {
-            this.fileName = fileName;
+            _fileName = fileName;
 
             return this;
         }
 
         public PathBuilder AddDirectory(string directory)
         {
-            this.directory = directory;
+            _directory = directory;
 
             return this;
         }
 
+        internal PathBuilder TrySetRoot(string root)
+        {
+            _root = string.IsNullOrEmpty(root) ? this._root : root;
+            return this;
+        }
+
         public string GetFull()
-         => Path.Combine(root, directory, fileName);
+         => Path.Combine(_root, _directory, _fileName);
 
 
         public string GetPath()
-            => System.IO.Path.Combine(root, directory);
+            => System.IO.Path.Combine(_root, _directory);
 
     }
 }

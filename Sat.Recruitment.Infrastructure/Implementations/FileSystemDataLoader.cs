@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using Microsoft.Extensions.Options;
 using Sat.Recruitment.Infrastructure.Contracts;
@@ -8,57 +9,72 @@ namespace Sat.Recruitment.Infrastructure.Implementations
 {
     public class FileSystemDataLoader : IDataLoader
     {
-        private readonly IPathBuilder pathBuilder;
-        private readonly FileSystemDataLoaderSettings settings;
+        private readonly IPathBuilder _pathBuilder;
+        private readonly FileSystemDataLoaderSettings _settings;
 
         public FileSystemDataLoader(IOptions<FileSystemDataLoaderSettings> settings, IPathBuilder pathBuilder)
         {
-            this.pathBuilder = pathBuilder;
-            this.settings = settings.Value;
+            _pathBuilder = pathBuilder;
+            _settings = settings.Value;
+
+            BuildPath();
         }
 
-        public StreamReader LoadData()
+        public TResult LoadData<TResult>(Func<StreamReader, TResult> processingData)
         {
             CheckPath();
             CheckFile();
 
-            string fullPath = pathBuilder.GetFull();
+            string fullPath = _pathBuilder.GetFull();
 
             using  FileStream fileStream = File.OpenRead(fullPath);
-
             using StreamReader reader = new StreamReader(fileStream);
-            return reader;
+
+            return processingData(reader);
+        }
+
+        public void LoadData(Action<StreamReader> processingData)
+        {
+            CheckPath();
+            CheckFile();
+
+            string fullPath = _pathBuilder.GetFull();
+
+            using FileStream fileStream = File.OpenRead(fullPath);
+            using StreamReader reader = new StreamReader(fileStream);
+
+            processingData(reader);
         }
 
         private void CheckPath()
         {
-            string path = pathBuilder.GetPath();
+            string path = _pathBuilder.GetPath();
 
             if (Directory.Exists(path))
             {
                 return;
             }
 
-            if (settings.CreateIfNotExist)
+            if (_settings.CreateIfNotExist)
             {
                 Directory.CreateDirectory(path);
             }
             else
             {
-                throw new MissingDirectoryException($"Couldn't find {path} directory.");
+                throw new MissingDirectoryException($"Couldn't find {path} _directory.");
             }
         }
 
         private void CheckFile()
         {
-            string fullPath = pathBuilder.GetFull();
+            string fullPath = _pathBuilder.GetFull();
 
             if (File.Exists(fullPath))
             {
                 return;
             }
 
-            if (settings.CreateIfNotExist)
+            if (_settings.CreateIfNotExist)
             {
                 File.Create(fullPath);
             }
@@ -68,5 +84,14 @@ namespace Sat.Recruitment.Infrastructure.Implementations
             }
 
         }
+
+        private void BuildPath()
+        {
+            _pathBuilder
+                .AddDirectory(_settings.Directory)
+                .AddFileName(_settings.FileName)
+                .TrySetRoot(_settings.Root);
+        }
+
     }
 }

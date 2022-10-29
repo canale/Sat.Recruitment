@@ -10,6 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Sat.Recruitment.Infrastructure.Contracts;
+using Sat.Recruitment.Infrastructure.Implementations;
+using Sat.Recruitment.Infrastructure.Settings;
 
 namespace Sat.Recruitment.Api
 {
@@ -25,6 +28,13 @@ namespace Sat.Recruitment.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Configuration
+            services.Configure<FileSystemDataLoaderSettings>(Configuration.GetSection(nameof(FileSystemDataLoaderSettings)));
+
+            // Infrastructure
+            services.AddTransient<IDataLoader, FileSystemDataLoader>();
+            services.AddTransient<IPathBuilder, PathBuilder>();
+
             services.AddControllers();
             services.AddSwaggerGen();
         }

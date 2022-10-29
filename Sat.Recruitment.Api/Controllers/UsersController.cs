@@ -4,24 +4,32 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
+using Sat.Recruitment.Infrastructure.Contracts;
 
 namespace Sat.Recruitment.Api.Controllers
 {
     public class Result
     {
         public bool IsSuccess { get; set; }
+
         public string Errors { get; set; }
     }
 
     [ApiController]
     [Route("[controller]")]
-    public partial class UsersController : ControllerBase
+    public class UsersController : ControllerBase
     {
+        private readonly IDataLoader _dataLoader;
+        private readonly ILogger<UsersController> _logger;
 
         private readonly List<User> _users = new List<User>();
-        public UsersController()
+
+        public UsersController(IDataLoader dataLoader, ILogger<UsersController> logger)
         {
+            _dataLoader = dataLoader;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -87,40 +95,39 @@ namespace Sat.Recruitment.Api.Controllers
             }
 
 
-            var reader = ReadUsersFromFile();
+           _dataLoader.LoadData(reader => {
 
-            //Normalize email
-            var aux = newUser.Email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
+               //Normalize email
+               var aux = newUser.Email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
 
-            var atIndex = aux[0].IndexOf("+", StringComparison.Ordinal);
+               var atIndex = aux[0].IndexOf("+", StringComparison.Ordinal);
 
-            aux[0] = atIndex < 0 ? aux[0].Replace(".", "") : aux[0].Replace(".", "").Remove(atIndex);
+               aux[0] = atIndex < 0 ? aux[0].Replace(".", "") : aux[0].Replace(".", "").Remove(atIndex);
 
-            newUser.Email = string.Join("@", new string[] { aux[0], aux[1] });
+               newUser.Email = string.Join("@", new string[] { aux[0], aux[1] });
 
-            while (reader.Peek() >= 0)
-            {
-                var line = reader.ReadLineAsync().Result;
-                var user = new User
-                {
-                    Name = line.Split(',')[0].ToString(),
-                    Email = line.Split(',')[1].ToString(),
-                    Phone = line.Split(',')[2].ToString(),
-                    Address = line.Split(',')[3].ToString(),
-                    UserType = line.Split(',')[4].ToString(),
-                    Money = decimal.Parse(line.Split(',')[5].ToString()),
-                };
-                _users.Add(user);
-            }
-            reader.Close();
+               while (reader.Peek() >= 0)
+               {
+                   var line = reader.ReadLineAsync().Result;
+                   var user = new User
+                   {
+                       Name = line.Split(',')[0].ToString(),
+                       Email = line.Split(',')[1].ToString(),
+                       Phone = line.Split(',')[2].ToString(),
+                       Address = line.Split(',')[3].ToString(),
+                       UserType = line.Split(',')[4].ToString(),
+                       Money = decimal.Parse(line.Split(',')[5].ToString()),
+                   };
+                   _users.Add(user);
+               }
+           });
+
             try
             {
                 var isDuplicated = false;
                 foreach (var user in _users)
                 {
-                    if (user.Email == newUser.Email
-                        ||
-                        user.Phone == newUser.Phone)
+                    if (user.Email == newUser.Email ||  user.Phone == newUser.Phone)
                     {
                         isDuplicated = true;
                     }
