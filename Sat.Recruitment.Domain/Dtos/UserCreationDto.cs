@@ -7,6 +7,6 @@ namespace Sat.Recruitment.Domain.Dtos
         public string address { get; set; }
         public string phone { get; set; }
         public string userType { get; set; }
-        public string money { get; set; }
+        public decimal money { get; set; }
     }
 }

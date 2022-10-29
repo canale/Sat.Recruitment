@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Sat.Recruitment.Domain;
 using Sat.Recruitment.Domain.Dtos;
+using Sat.Recruitment.Domain.Enums;
 using Sat.Recruitment.Domain.ValueObjects;
 using Sat.Recruitment.Infrastructure.Contracts;
 
@@ -20,82 +21,66 @@ namespace Sat.Recruitment.Application.Services
 
         public Result CreateUser(UserCreationDto dto)
         {
-            decimal.TryParse(dto.money, out decimal money);
-            var newUser = new User
-            {
-                Name = dto.name,
-                Email = dto.email,
-                Address = dto.address,
-                Phone = dto.phone,
-                UserType = dto.userType,
-                Money = money
-            };
+            var newUser = new User(
+                dto.name,
+                dto.email,
+                dto.address,
+                dto.phone,
+                dto.userType.ToUserType(),
+                dto.money
+            );
 
-            if (newUser.UserType == "Normal")
+            switch (newUser.UserType)
             {
-                if (newUser.Money > 100)
+                case UserType.Normal:
                 {
-                    var percentage = Convert.ToDecimal(0.12);
                     //If new user is normal and has more than USD100
-                    var gif = decimal.Parse(dto.money) * percentage;
-                    newUser.Money = newUser.Money + gif;
-                }
-
-                if (newUser.Money < 100)
-                {
-                    if (newUser.Money > 10)
+                    if (newUser.Money > 100)
                     {
-                        var percentage = Convert.ToDecimal(0.8);
-                        var gif = decimal.Parse(dto.money) * percentage;
-                        newUser.Money = newUser.Money + gif;
+                        newUser.AddRewardByPercentage(0.12m);
                     }
-                }
-            }
+                    else if (newUser.Money < 100 && newUser.Money > 10)
+                    {
+                        newUser.AddRewardByPercentage(0.8m);
+                    }
 
-            if (newUser.UserType == "SuperUser")
-            {
-                if (newUser.Money > 100)
-                {
-                    var percentage = Convert.ToDecimal(0.20);
-                    var gif = decimal.Parse(dto.money) * percentage;
-                    newUser.Money = newUser.Money + gif;
+                    break;
                 }
-            }
-
-            if (newUser.UserType == "Premium")
-            {
-                if (newUser.Money > 100)
+                case UserType.SuperUser:
                 {
-                    var gif = decimal.Parse(dto.money) * 2;
-                    newUser.Money = newUser.Money + gif;
+                    if (newUser.Money > 100)
+                    {
+                        newUser.AddRewardByPercentage(0.20m);
+                    }
+
+                    break;
+                }
+                case UserType.Premium:
+                {
+                    if (newUser.Money > 100)
+                    {
+                        newUser.AddRewardByPercentage(2);
+                    }
+
+                    break;
                 }
             }
 
             _dataLoader.LoadData(reader =>
             {
-
-                //Normalize email
-                var aux = newUser.Email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
-
-                var atIndex = aux[0].IndexOf("+", StringComparison.Ordinal);
-
-                aux[0] = atIndex < 0 ? aux[0].Replace(".", "") : aux[0].Replace(".", "").Remove(atIndex);
-
-                newUser.Email = string.Join("@", new string[] { aux[0], aux[1] });
-
                 while (reader.Peek() >= 0)
                 {
                     var line = reader.ReadLineAsync().Result;
 
                     var user = new User
-                    {
-                        Name = line.Split(',')[0].ToString(),
-                        Email = line.Split(',')[1].ToString(),
-                        Phone = line.Split(',')[2].ToString(),
-                        Address = line.Split(',')[3].ToString(),
-                        UserType = line.Split(',')[4].ToString(),
-                        Money = decimal.Parse(line.Split(',')[5].ToString()),
-                    };
+                    (
+                        line.Split(',')[0],
+                        line.Split(',')[1],
+                        line.Split(',')[2],
+                         line.Split(',')[3],
+                        line.Split(',')[4].ToUserType(),
+                        decimal.Parse(line.Split(',')[5])
+                    );
 
                     _users.Add(user);
                 }
