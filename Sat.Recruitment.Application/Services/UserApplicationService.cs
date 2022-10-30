@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Sat.Recruitment.Domain;
+using Sat.Recruitment.Domain.Contracts;
 using Sat.Recruitment.Domain.Dtos;
 using Sat.Recruitment.Domain.Enums;
 using Sat.Recruitment.Domain.ValueObjects;
@@ -11,12 +12,11 @@ namespace Sat.Recruitment.Application.Services
 {
     public class UserApplicationService : IUserApplicationService
     {
-        private readonly IDataLoader _dataLoader;
-        private readonly List<User> _users = new List<User>();
+        private readonly IUserRepository _userRepository;
 
-        public UserApplicationService(IDataLoader dataLoader)
+        public UserApplicationService(IUserRepository userRepository)
         {
-            _dataLoader = dataLoader;
+            _userRepository = userRepository;
         }
 
         public Result CreateUser(UserCreationDto dto)
@@ -66,30 +66,11 @@ namespace Sat.Recruitment.Application.Services
                 }
             }
 
-            _dataLoader.LoadData(reader =>
-            {
-                while (reader.Peek() >= 0)
-                {
-                    var line = reader.ReadLineAsync().Result;
-
-                    var user = new User
-                    (
-                        line.Split(',')[0],
-                        line.Split(',')[1],
-                        line.Split(',')[2],
-                         line.Split(',')[3],
-                        line.Split(',')[4].ToUserType(),
-                        decimal.Parse(line.Split(',')[5])
-                    );
-
-                    _users.Add(user);
-                }
-            });
-
             try
             {
+                IList<User> users = _userRepository.GetAll();
                 var isDuplicated = false;
-                foreach (var user in _users)
+                foreach (var user in users)
                 {
                     if (user.Email == newUser.Email || user.Phone == newUser.Phone)
                     {
@@ -142,8 +123,6 @@ namespace Sat.Recruitment.Application.Services
                 IsSuccess = true,
                 Errors = "User Created"
             };
-
-
 
             return new Result()
             {

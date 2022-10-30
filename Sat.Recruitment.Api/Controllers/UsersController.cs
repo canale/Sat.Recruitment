@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using AutoMapper;
 using Sat.Recruitment.Domain;
+using Sat.Recruitment.Domain.Contracts;
 using Sat.Recruitment.Domain.Dtos;
 
 namespace Sat.Recruitment.Api.Controllers

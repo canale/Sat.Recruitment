@@ -1,6 +1,6 @@
 using Sat.Recruitment.Domain.Dtos;
 
-namespace Sat.Recruitment.Domain
+namespace Sat.Recruitment.Domain.Contracts
 {
     public interface IUserApplicationService
     {

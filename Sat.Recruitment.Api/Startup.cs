@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Sat.Recruitment.Application.Services;
 using Sat.Recruitment.Domain;
+using Sat.Recruitment.Domain.Contracts;
 using Sat.Recruitment.Infrastructure.Contracts;
 using Sat.Recruitment.Infrastructure.Implementations;
 using Sat.Recruitment.Infrastructure.Settings;
