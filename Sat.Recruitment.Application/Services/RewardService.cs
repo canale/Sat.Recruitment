@@ -3,11 +3,11 @@ using Sat.Recruitment.Domain.ValueObjects;
 
 namespace Sat.Recruitment.Application.Services
 {
-    public class RewardApplicationService : IRewardApplicationService
+    public class RewardService : IRewardService
     {
         private readonly IRewardProcessorFactory _rewardProcessorFactory;
 
-        public RewardApplicationService(IRewardProcessorFactory rewardProcessorFactory)
+        public RewardService(IRewardProcessorFactory rewardProcessorFactory)
         {
             _rewardProcessorFactory = rewardProcessorFactory;
         }

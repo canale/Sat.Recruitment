@@ -19,6 +19,8 @@ using Sat.Recruitment.Infrastructure.Contracts;
 using Sat.Recruitment.Infrastructure.Implementations;
 using Sat.Recruitment.Infrastructure.Settings;
 using Sat.Recruitment.DataAccess.Repositories;
+using Sat.Recruitment.Domain.ValueObjects;
+using Sat.Recruitment.Infrastructure.Mappers;
 
 namespace Sat.Recruitment.Api
 {
@@ -39,7 +41,7 @@ namespace Sat.Recruitment.Api
 
             //Services
             services.AddTransient<IUserApplicationService, UserApplicationService>();
-            services.AddTransient<IRewardApplicationService, RewardApplicationService>();
+            services.AddTransient<IRewardService, RewardService>();
 
             services.AddTransient<IRewardProcessorFactory, RewardProcessorFactory>();
             
@@ -54,6 +56,8 @@ namespace Sat.Recruitment.Api
             // Infrastructure
             services.AddTransient<IDataLoader, FileSystemDataLoader>();
             services.AddTransient<IPathBuilder, PathBuilder>();
+            services.AddTransient<IDataSerializer<User>, SplitSerializer<User>>();
+            services.AddTransient<IDataSerializerMapper<User>, UserSplitSerializerMapper>();
 
             services.AddControllers();
             services.AddSwaggerGen();
@@ -75,7 +79,8 @@ namespace Sat.Recruitment.Api
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
-            app.UseRouting();
+
+            app.UseRouting(); 
 
             app.UseAuthorization();
 

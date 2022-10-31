@@ -4,11 +4,11 @@ namespace Sat.Recruitment.Domain.Contracts
 {
     public interface IUserApplicationService
     {
-        Result CreateUser(UserCreationDto dto);
+        ResultDto CreateUser(UserCreationDto dto);
     }
 
 
-    public class Result
+    public class ResultDto
     {
         public bool IsSuccess { get; set; }
         public string Errors { get; set; }

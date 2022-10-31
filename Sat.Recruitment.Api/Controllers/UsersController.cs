@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using AutoMapper;
-using Sat.Recruitment.Domain;
 using Sat.Recruitment.Domain.Contracts;
 using Sat.Recruitment.Domain.Dtos;
+using System.Threading.Tasks;
 
 namespace Sat.Recruitment.Api.Controllers
 {
@@ -16,7 +15,7 @@ namespace Sat.Recruitment.Api.Controllers
     }
 
     [ApiController]
-    [Route("api/v2/[controller]")]
+    [Route("api/v2/users")]
     public class UsersController : ControllerBase
     {
         private readonly IUserApplicationService _userApplicationService;
@@ -31,8 +30,7 @@ namespace Sat.Recruitment.Api.Controllers
             _logger = logger;
         }
 
-        [HttpPost]
-        [Route("/create-user")]
+        [HttpPost("create-user")]
         public async Task<Result> CreateUser(UserCreationRequest request)
         {
             var errors = "";

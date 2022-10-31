@@ -1,5 +1,4 @@
-﻿using System.Net;
-using Sat.Recruitment.Domain.Enums;
+﻿using Sat.Recruitment.Domain.Enums;
 
 namespace Sat.Recruitment.Domain.ValueObjects
 {
@@ -13,7 +12,7 @@ namespace Sat.Recruitment.Domain.ValueObjects
         public Money Money { get; private set; }
 
 
-        public User(Name name, Email email, Address address, Phone phone, UserType userType, Money money)
+        public User(Name name, Email email, Phone phone, Address address, UserType userType, Money money)
         {
             Name = name;
             Email = email;
@@ -34,5 +33,16 @@ namespace Sat.Recruitment.Domain.ValueObjects
 
             return this;
         }
+
+        /// <summary>
+        /// Allows to determine if two User instances are equivalents
+        /// </summary>
+        /// <param name="other">Second User instance which will be compared.</param>
+        /// <returns>Retrieves a bool value indicating if the other User instance is equivalent or not. True if it is or false if not.</returns>
+        public bool IsDuplicated(User other)
+            =>  (Email == other.Email || Phone == other.Phone)
+                || (Name == other.Name && Address == other.Address);
+
+        
     }
 }

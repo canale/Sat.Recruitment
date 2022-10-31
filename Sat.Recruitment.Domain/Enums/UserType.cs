@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 
 namespace Sat.Recruitment.Domain.Enums
 {
@@ -24,5 +23,15 @@ namespace Sat.Recruitment.Domain.Enums
                 _ => throw new InvalidOperationException()
             };
         }
+
+        public static string ToStringFormat(this UserType target)
+            => target switch
+            {
+                UserType.Normal => "normal",
+                UserType.SuperUser => "superuser",
+                UserType.Premium => "premium",
+                _ => throw new InvalidOperationException()
+            };
+
     }
 }

@@ -7,6 +7,6 @@ namespace Sat.Recruitment.Domain.Contracts
     {
         void AddsUser(User user);
 
-        IEnumerable<User> GetAll();
+        User[] GetAll();
     }
 }
