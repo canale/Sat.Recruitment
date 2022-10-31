@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Sat.Recruitment.Infrastructure.Exceptions
+namespace Sat.Recruitment.Domain.Exceptions
 { 
     public abstract class TechnicalException : Exception
     {

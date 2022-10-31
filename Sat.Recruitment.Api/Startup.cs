@@ -10,12 +10,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Sat.Recruitment.Application.Factories;
+using Sat.Recruitment.Application.Processors;
 using Sat.Recruitment.Application.Services;
 using Sat.Recruitment.Domain;
 using Sat.Recruitment.Domain.Contracts;
 using Sat.Recruitment.Infrastructure.Contracts;
 using Sat.Recruitment.Infrastructure.Implementations;
 using Sat.Recruitment.Infrastructure.Settings;
+using Sat.Recruitment.DataAccess.Repositories;
 
 namespace Sat.Recruitment.Api
 {
@@ -36,6 +39,17 @@ namespace Sat.Recruitment.Api
 
             //Services
             services.AddTransient<IUserApplicationService, UserApplicationService>();
+            services.AddTransient<IRewardApplicationService, RewardApplicationService>();
+
+            services.AddTransient<IRewardProcessorFactory, RewardProcessorFactory>();
+            
+            // Processors
+            services.AddTransient<PremiumUserRewardProcessor>();
+            services.AddTransient<NormalUserRewardProcessor>();
+            services.AddTransient<SuperUserRewardProcessor>();
+
+            // Repositories
+            services.AddTransient<IUserRepository, UserRepository>();
 
             // Infrastructure
             services.AddTransient<IDataLoader, FileSystemDataLoader>();

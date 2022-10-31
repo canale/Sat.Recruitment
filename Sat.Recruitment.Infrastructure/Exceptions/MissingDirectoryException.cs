@@ -1,3 +1,5 @@
+using Sat.Recruitment.Domain.Exceptions;
+
 namespace Sat.Recruitment.Infrastructure.Exceptions
 {
     public class MissingDirectoryException : TechnicalException

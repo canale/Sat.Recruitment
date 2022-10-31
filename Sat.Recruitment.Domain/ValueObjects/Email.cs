@@ -15,7 +15,7 @@ namespace Sat.Recruitment.Domain.ValueObjects
         {
             Guard.For(email)
                 .IsNullOrEmpty()
-                .NotMatch( new Regex(Pattern, Options), "Invalid email format");
+                .NotMatch( new Regex(Pattern, Options), "Invalid Email format");
 
             Value = Normalize(email);
         }
@@ -28,7 +28,7 @@ namespace Sat.Recruitment.Domain.ValueObjects
 
         private string Normalize(string target)
         {
-            //Normalize email
+            //Normalize Email
             var aux = target.Split('@', StringSplitOptions.RemoveEmptyEntries);
             var atIndex = aux[0].IndexOf("+", StringComparison.Ordinal);
             aux[0] = atIndex < 0 ? aux[0].Replace(".", "") : aux[0].Replace(".", "").Remove(atIndex);

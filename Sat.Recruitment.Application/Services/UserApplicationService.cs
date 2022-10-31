@@ -1,74 +1,41 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Sat.Recruitment.Domain;
 using Sat.Recruitment.Domain.Contracts;
 using Sat.Recruitment.Domain.Dtos;
 using Sat.Recruitment.Domain.Enums;
 using Sat.Recruitment.Domain.ValueObjects;
-using Sat.Recruitment.Infrastructure.Contracts;
 
 namespace Sat.Recruitment.Application.Services
 {
     public class UserApplicationService : IUserApplicationService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IRewardApplicationService _rewardApplicationService;
 
-        public UserApplicationService(IUserRepository userRepository)
+        public UserApplicationService(IUserRepository userRepository, IRewardApplicationService rewardApplicationService)
         {
             _userRepository = userRepository;
+            _rewardApplicationService = rewardApplicationService;
         }
 
         public Result CreateUser(UserCreationDto dto)
         {
             var newUser = new User(
-                dto.name,
-                dto.email,
-                dto.address,
-                dto.phone,
-                dto.userType.ToUserType(),
-                dto.money
+                dto.Name,
+                dto.Email,
+                dto.Address,
+                dto.Phone,
+                dto.UserType.ToUserType(),
+                dto.Money
             );
 
-            switch (newUser.UserType)
-            {
-                case UserType.Normal:
-                {
-                    //If new user is normal and has more than USD100
-                    if (newUser.Money > 100)
-                    {
-                        newUser.AddRewardByPercentage(0.12m);
-                    }
-                    else if (newUser.Money < 100 && newUser.Money > 10)
-                    {
-                        newUser.AddRewardByPercentage(0.8m);
-                    }
+            newUser = _rewardApplicationService.AddRewardToUser(newUser);
 
-                    break;
-                }
-                case UserType.SuperUser:
-                {
-                    if (newUser.Money > 100)
-                    {
-                        newUser.AddRewardByPercentage(0.20m);
-                    }
-
-                    break;
-                }
-                case UserType.Premium:
-                {
-                    if (newUser.Money > 100)
-                    {
-                        newUser.AddRewardByPercentage(2);
-                    }
-
-                    break;
-                }
-            }
 
             try
             {
-                IList<User> users = _userRepository.GetAll();
+                IEnumerable<User> users = _userRepository.GetAll();
                 var isDuplicated = false;
                 foreach (var user in users)
                 {

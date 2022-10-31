@@ -24,13 +24,15 @@ namespace Sat.Recruitment.Domain.ValueObjects
         }
 
         /// <summary>
-        /// Allows to add reward by a percentage of users money.
+        /// Allows to add reward by a percentage of users Money.
         /// </summary>
-        /// <param name="percentage">Percentage of current money that will be added to the User assets.</param>
-        public void AddRewardByPercentage(decimal percentage)
+        /// <param name="percentage">Percentage of current Money that will be added to the User assets.</param>
+        public User AddRewardByPercentage(decimal percentage)
         {
             var reward = Money * percentage;
             Money = Money + reward;
+
+            return this;
         }
     }
 }

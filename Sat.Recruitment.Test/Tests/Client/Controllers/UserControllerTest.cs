@@ -13,19 +13,19 @@ namespace Sat.Recruitment.Test.Tests.Client.Controllers
         public async Task CreateUser_WithExistentRecord_ShouldGetDuplicateError()
         {
             // Arrange
-            string name = "Mike";
-            string email = "mike@gmail.com";
-            string address = "Av. Juan G";
+            string Name = "Mike";
+            string Email = "mike@gmail.com";
+            string Address = "Av. Juan G";
             string phoneNumber = "+349 1122354215";
-            string userType = "Normal";
-            string money = "124";
+            string UserType = "Normal";
+            string Money = "124";
 
 
             var SUT = CreateSUT();
 
             // Action
 
-            var act = await SUT.CreateUser(name, email, address, phoneNumber, userType, money);
+            var act = await SUT.CreateUser(Name, Email, Address, phoneNumber, UserType, Money);
 
             // Assertion
             Assert.Equal(true, act.IsSuccess);

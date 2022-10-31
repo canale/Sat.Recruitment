@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sat.Recruitment.Domain\Sat.Recruitment.Domain.csproj" />
-    <ProjectReference Include="..\Sat.Recruitment.Infrastructure\Sat.Recruitment.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

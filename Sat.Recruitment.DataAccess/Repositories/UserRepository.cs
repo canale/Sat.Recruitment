@@ -39,7 +39,7 @@ namespace Sat.Recruitment.DataAccess.Repositories
             });
         }
 
-        public IList<User> GetAll()
+        public IEnumerable<User> GetAll()
         {
             _dataLoader.LoadData(reader =>
             {
@@ -60,6 +60,9 @@ namespace Sat.Recruitment.DataAccess.Repositories
                     _users.Add(user);
                 }
             });
+
+            return _users.ToArray();
         }
+
     }
 }

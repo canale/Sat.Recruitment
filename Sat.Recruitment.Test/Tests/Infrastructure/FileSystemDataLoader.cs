@@ -7,6 +7,7 @@ using Sat.Recruitment.Infrastructure.Implementations;
 using Sat.Recruitment.Infrastructure.Settings;
 using Sat.Recruitment.Test.Tests;
 using System;
+using Sat.Recruitment.Domain.Exceptions;
 using Xunit;
 
 namespace Sat.Recruitment.Test.Infrastructure

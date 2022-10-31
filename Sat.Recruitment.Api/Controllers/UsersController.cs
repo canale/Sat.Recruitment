@@ -61,19 +61,19 @@ namespace Sat.Recruitment.Api.Controllers
         {
             if (string.IsNullOrEmpty(request.name))
                 //Validate if Name is null
-                errors = "The name is required";
+                errors = "The Name is required";
 
             if (string.IsNullOrEmpty(request.email))
                 //Validate if Email is null
-                errors = errors + " The email is required";
+                errors = errors + " The Email is required";
 
             if (string.IsNullOrEmpty(request.address))
                 //Validate if Address is null
-                errors = errors + " The address is required";
+                errors = errors + " The Address is required";
 
             if (string.IsNullOrEmpty(request.phone))
                 //Validate if Phone is null
-                errors = errors + " The phone is required";
+                errors = errors + " The Phone is required";
         }
     }
 }
