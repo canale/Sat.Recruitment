@@ -56,6 +56,7 @@ namespace Sat.Recruitment.Test.Tests.Infrastructure
             act.Should().Be(AppContext.BaseDirectory);
         }
 
+
         // GetFull
         [Fact]
         public void GetFull_WithValidParamaters_ShouldGetRightPath()

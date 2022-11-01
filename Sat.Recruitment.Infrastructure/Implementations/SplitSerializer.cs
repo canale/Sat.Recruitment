@@ -25,7 +25,7 @@ namespace Sat.Recruitment.Infrastructure.Implementations
         {
             string[] fields = _dataSerializerMapper.Deserialize(source);
 
-            return string.Join(",", fields);
+            return string.Join(_dataSerializerMapper.Separator, fields);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Sat.Recruitment.Domain.ValueObjects
             Value = money;
         }
 
-        protected override bool EqualsCore(Money other)
+        protected override bool CompareEquality(Money other)
             => Value == other.Value;
 
         protected override int GetHashCodeCore()

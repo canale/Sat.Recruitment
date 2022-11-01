@@ -20,8 +20,8 @@ namespace Sat.Recruitment.Domain.ValueObjects
             Value = Normalize(email);
         }
 
-        protected override bool EqualsCore(Email other)
-            => Value == other.Value;
+        protected override bool CompareEquality(Email other)
+            => Value.ToLower() == other.Value.ToLower();
 
         protected override int GetHashCodeCore()
             => Value.GetHashCode();

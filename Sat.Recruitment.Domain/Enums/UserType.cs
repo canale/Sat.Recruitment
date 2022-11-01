@@ -13,7 +13,7 @@ namespace Sat.Recruitment.Domain.Enums
     {
         public static UserType ToUserType(this string target)
         {
-            string cleanTarget = target.Trim().ToLower();
+            string? cleanTarget = target?.Trim()?.ToLower();
 
             return cleanTarget switch
             {

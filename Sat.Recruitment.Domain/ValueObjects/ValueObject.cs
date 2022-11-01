@@ -8,7 +8,7 @@ namespace Sat.Recruitment.Domain.ValueObjects
             if (!(obj is TValueObject valueObject))
                 return false;
 
-            return GetType() == obj.GetType() && EqualsCore(valueObject);
+            return GetType() == obj.GetType() && CompareEquality(valueObject);
         }
 
         public override int GetHashCode()
@@ -33,7 +33,7 @@ namespace Sat.Recruitment.Domain.ValueObjects
         }
 
 
-        protected abstract bool EqualsCore(TValueObject other);
+        protected abstract bool CompareEquality(TValueObject other);
 
         protected abstract int GetHashCodeCore();
     }

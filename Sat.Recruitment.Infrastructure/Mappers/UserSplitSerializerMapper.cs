@@ -7,6 +7,7 @@ namespace Sat.Recruitment.Infrastructure.Mappers
     public class UserSplitSerializerMapper : IDataSerializerMapper<User>
     {
         public char Separator => ',';
+
         public User Serialize(string[] fields)
             =>  new User
             (
@@ -23,9 +24,10 @@ namespace Sat.Recruitment.Infrastructure.Mappers
             {
                 source.Name,
                 source.Email,
-                source.Address,
                 source.Phone,
+                source.Address,
                 source.UserType.ToStringFormat(),
+                source.Money.Value.ToString()
             };
     }
 }
