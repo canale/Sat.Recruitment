@@ -3,7 +3,6 @@ using Sat.Recruitment.Domain.Contracts;
 using Sat.Recruitment.Domain.Dtos;
 using Sat.Recruitment.Domain.Guards;
 using Sat.Recruitment.Domain.ValueObjects;
-using System.Linq;
 
 namespace Sat.Recruitment.Application.Services
 {
@@ -18,32 +17,24 @@ namespace Sat.Recruitment.Application.Services
             _rewardApplicationService = rewardApplicationService;
         }
 
-        public ResultDto CreateUser(UserCreationDto dto)
+        public Result<UserCreationDto> CreateUser(UserCreationDto dto)
         {
             Guard.For(dto).IsNull();
 
             User newUser = dto.ToUser();
             bool isDuplicated = _userRepository
                 .GetAll()
-                .HasDuplicated(newUser);
+                .HasDuplicates(newUser);
 
             if (isDuplicated)
             {
-                return new ResultDto
-                {
-                    IsSuccess = false,
-                    Errors = "The user is duplicated",
-                };
+                return Result<UserCreationDto>.Failure(new Error("The user is duplicated", typeof(User)));
             }
 
             newUser = _rewardApplicationService.AddRewardToUser(newUser);
             _userRepository.AddsUser(newUser);
 
-            return new ResultDto
-            {
-                IsSuccess = true,
-                Errors = "User Created",
-            };
+            return Result<UserCreationDto>.Succeed(newUser.ToUserCreationDto());
         }
     }
 }

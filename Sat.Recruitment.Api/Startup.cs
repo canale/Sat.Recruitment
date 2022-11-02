@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Sat.Recruitment.Api.Filters;
 using Sat.Recruitment.Application.Factories;
 using Sat.Recruitment.Application.Processors;
 using Sat.Recruitment.Application.Services;
@@ -59,7 +60,11 @@ namespace Sat.Recruitment.Api
             services.AddTransient<IDataSerializer<User>, SplitSerializer<User>>();
             services.AddTransient<IDataSerializerMapper<User>, UserSplitSerializerMapper>();
 
-            services.AddControllers();
+            services.AddControllers(config =>
+            {
+                config.Filters.Add(new ExceptionFilter());
+            });
+
             services.AddSwaggerGen();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }

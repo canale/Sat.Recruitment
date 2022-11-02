@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Sat.Recruitment.Api.Requests;
 using Sat.Recruitment.Domain.Dtos;
 
 namespace Sat.Recruitment.Api.Helpers

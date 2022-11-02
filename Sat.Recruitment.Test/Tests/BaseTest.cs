@@ -9,7 +9,7 @@ namespace Sat.Recruitment.Test.Tests
     /// <summary>
     /// Test base con funcionalidad común para todos los tests.
     /// </summary>
-    /// <typeparam name="TSut">System Under Test type.</typeparam>
+    /// <typeparam Name="TSut">System Under Test type.</typeparam>
     public class BaseTest<TSut>
         where TSut : class
     {
@@ -34,15 +34,15 @@ namespace Sat.Recruitment.Test.Tests
         /// <summary>
         /// Permite crear la instancia del SUT (System Under Test)
         /// </summary>
-        /// <typeparam name="TSut">Tipo SUT que se instanciará. </typeparam>
+        /// <typeparam Name="TSut">Tipo SUT que se instanciará. </typeparam>
         /// <returns>Deveulve una instancia con un SUT para testear.</returns>
         protected TSut CreateSUT() => Create<TSut>();
 
         /// <summary>
         /// Permite inyectar un objeto en el contexto del test.
         /// </summary>
-        /// <param name="target">Instancia a inyectar.</param>
-        /// <typeparam name="TInjectable">Tipo de dato a inyectar.</typeparam>
+        /// <param Name="target">Instancia a inyectar.</param>
+        /// <typeparam Name="TInjectable">Tipo de dato a inyectar.</typeparam>
         /// <returns>Deveulve la instancia TInjectable que se desea agregar.</returns>
         protected TInjectable AddInstance<TInjectable>(TInjectable target)
         {
@@ -53,7 +53,7 @@ namespace Sat.Recruitment.Test.Tests
         /// <summary>
         /// Permite crear un Mock y agregarlo al SUT.
         /// </summary>
-        /// <typeparam name="TInjectable">Tipo de dato del cual se va a crear el Mock. Debe ser una interfaz.</typeparam>
+        /// <typeparam Name="TInjectable">Tipo de dato del cual se va a crear el Mock. Debe ser una interfaz.</typeparam>
         /// <returns>Instancia de Mock con el el tipo TInjectable.</returns>
         /// <see cref="Mock"/>
         protected Mock<TInjectable> AddFromInterface<TInjectable>()
@@ -80,7 +80,7 @@ namespace Sat.Recruitment.Test.Tests
         /// <summary>
         /// Permite crear un Mock con sus dependencias mockeadas. 
         /// </summary>
-        /// <typeparam name="TMock">Tipo de dato del Mock.</typeparam>
+        /// <typeparam Name="TMock">Tipo de dato del Mock.</typeparam>
         /// <returns>Una instancia Mock con sus dependencias.</returns>
         protected TMock Create<TMock>()
             where TMock : class => Fixture.Create<TMock>();

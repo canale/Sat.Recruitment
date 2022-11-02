@@ -15,5 +15,16 @@ namespace Sat.Recruitment.Application.Extensions
                 dto.UserType.ToUserType(),
                 dto.Money
             );
+
+        internal static UserCreationDto ToUserCreationDto(this User user)
+            => new UserCreationDto
+            {
+                Name = user.Name,
+                Email = user.Email,
+                Phone = user.Phone,
+                Address = user.Address,
+                UserType = user.UserType.ToStringFormat(),
+                Money = user.Money
+            };
     }
 }

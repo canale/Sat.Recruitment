@@ -1,13 +1,20 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sat.Recruitment.Domain.Contracts;
 using Sat.Recruitment.Domain.Dtos;
 using System.Threading.Tasks;
+using Sat.Recruitment.Api.Helpers;
+using Sat.Recruitment.Api.Requests;
+using Sat.Recruitment.Api.Responses;
+using System.Net;
 
 namespace Sat.Recruitment.Api.Controllers
 {
-    public class Result
+    public class Response
     {
         public bool IsSuccess { get; set; }
 
@@ -31,47 +38,32 @@ namespace Sat.Recruitment.Api.Controllers
         }
 
         [HttpPost("create-user")]
-        public async Task<Result> CreateUser(UserCreationRequest request)
+        public IActionResult CreateUser(UserCreationRequest request)
         {
-            var errors = "";
-
-            ValidateErrors(request, ref errors);
-
-            if (errors != null && errors != "")
-                return new Result()
-                {
-                    IsSuccess = false,
-                    Errors = errors
-                };
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
 
             UserCreationDto dto = _mapper.Map<UserCreationDto>(request);
-            var result = _userApplicationService.CreateUser(dto);
+            IActionResult result = _userApplicationService
+                .CreateUser(dto)
+                .Transform<IActionResult>(
+                    onSuccess:result =>
+                         CreatedAtAction(
+                             nameof(CreateUser),
+                             new { email = result.Value.Email },
+                             new CreationResponse<UserCreationDto> (result.Value)
+                        ),
+                    onFail:result =>
+                        Conflict(new ResponseBuilder()
+                                    .FromError(result.Errors.First())
+                                    .FromHttpContext(HttpContext)
+                                    .AddStatusCode(HttpStatusCode.Conflict)
+                                    .Build()
+                      ) );
 
-            return new Result
-            {
-                IsSuccess = result.IsSuccess,
-                Errors = result.Errors
-            };
-        }
-
-        //Validate errors
-        private void ValidateErrors(UserCreationRequest request, ref string errors)
-        {
-            if (string.IsNullOrEmpty(request.name))
-                //Validate if Name is null
-                errors = "The Name is required";
-
-            if (string.IsNullOrEmpty(request.email))
-                //Validate if Email is null
-                errors = errors + " The Email is required";
-
-            if (string.IsNullOrEmpty(request.address))
-                //Validate if Address is null
-                errors = errors + " The Address is required";
-
-            if (string.IsNullOrEmpty(request.phone))
-                //Validate if Phone is null
-                errors = errors + " The Phone is required";
+            return result;
         }
     }
 }
