@@ -48,5 +48,11 @@ namespace Sat.Recruitment.Domain.Guards
             Eval(() => !exp.Match(_target).Success, exception ?? new ArgumentException(message));
             return this;
         }
+
+        public StringGuard NotContains(string content, string message = "The argument should not contain this set of chars")
+        {
+            Eval(() => !_target.Contains(content), new ArgumentException(message));
+            return this;
+        }
     }
 }

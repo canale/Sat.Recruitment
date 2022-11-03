@@ -4,9 +4,9 @@ using Sat.Recruitment.Domain.ValueObjects;
 
 namespace Sat.Recruitment.Application.Extensions
 {
-    internal static class DtoExtensions
+    public static class DtoExtensions
     {
-        internal static User ToUser(this UserCreationDto dto)
+        public static User ToUser(this UserCreationDto dto)
             => new User(
                 dto.Name,
                 dto.Email,
@@ -16,7 +16,7 @@ namespace Sat.Recruitment.Application.Extensions
                 dto.Money
             );
 
-        internal static UserCreationDto ToUserCreationDto(this User user)
+        public static UserCreationDto ToUserCreationDto(this User user)
             => new UserCreationDto
             {
                 Name = user.Name,

@@ -11,7 +11,7 @@ namespace Sat.Recruitment.Test.Helpers.Factories
         public static readonly string Phone =  "+534645213542";
         public static readonly string Address =  "Garay y Otra Calle";
         public static readonly string UserType =  "SuperUser";
-        public static readonly string Money =  "112234";
+        public static readonly string Money =  "100";
         public static readonly char Separator =  ',';
 
         public static readonly string UserRecord =  $"{Name},{Email},{Phone},{Address},{UserType},{Money}";

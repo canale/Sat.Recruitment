@@ -22,7 +22,5 @@ namespace Sat.Recruitment.Domain.Guards
             Eval(() => !(_target is null), new ArgumentException(message));
             return this;
         }
-
-
     }
 }

@@ -12,7 +12,7 @@ namespace Sat.Recruitment.Application.Processors
             //If new user is normal and has more than USD100
             if (targetUser.Money > 100)
             {
-                processedUser = targetUser.AddRewardByPercentage(0.20m);
+                processedUser = targetUser.AddRewardByPercentage(20m);
             }
 
             return processedUser;

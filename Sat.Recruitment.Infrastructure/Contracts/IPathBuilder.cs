@@ -4,9 +4,10 @@ namespace Sat.Recruitment.Infrastructure.Contracts
 {
     public interface IPathBuilder
     {
-        PathBuilder AddDirectory(string directory);
-        PathBuilder AddFileName(string fileName);
-        PathBuilder AddRoot(string root);
+        IPathBuilder AddDirectory(string directory);
+        IPathBuilder AddFileName(string fileName);
+        IPathBuilder AddRoot(string root);
+        IPathBuilder TrySetRoot(string root);
         string GetFull();
         string GetPath();
     }

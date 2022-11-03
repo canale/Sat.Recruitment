@@ -24,7 +24,7 @@ namespace Sat.Recruitment.Test.Tests.Infrastructure
 
             // Assertion
             act.Should().NotBeNull();
-            act.Should().BeEquivalentTo(UserFactory.Valid);
+            act.Should().BeEquivalentTo(UserFactory.ValidUser);
         }
 
         [Fact]
@@ -36,7 +36,7 @@ namespace Sat.Recruitment.Test.Tests.Infrastructure
             var SUT = this.CreateSUT();
 
             // Action
-            string[] act = SUT.Deserialize(UserFactory.Valid);
+            string[] act = SUT.Deserialize(UserFactory.ValidUser);
 
             // Assertion
             act.Should().NotBeNull();

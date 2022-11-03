@@ -16,11 +16,11 @@ namespace Sat.Recruitment.Application.Processors
             
             if (targetUser.Money > 100)
             {
-                processedUser = targetUser.AddRewardByPercentage(0.12m);
+                processedUser = targetUser.AddRewardByPercentage(12m);
             }
-            else if (targetUser.Money < 100 && targetUser.Money > 10)
+            else if (targetUser.Money <= 100 && targetUser.Money > 10)
             {
-                processedUser = targetUser.AddRewardByPercentage(0.8m);
+                processedUser = targetUser.AddRewardByPercentage(8m);
             }
 
             return processedUser;

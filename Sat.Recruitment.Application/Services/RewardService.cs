@@ -1,4 +1,5 @@
 using Sat.Recruitment.Domain.Contracts;
+using Sat.Recruitment.Domain.Guards;
 using Sat.Recruitment.Domain.ValueObjects;
 
 namespace Sat.Recruitment.Application.Services
@@ -19,6 +20,8 @@ namespace Sat.Recruitment.Application.Services
         /// <returns></returns>
         public User AddRewardToUser(User user)
         {
+            Guard.For(user).IsNull();
+
             IRewardProcessor processor = _rewardProcessorFactory.GetProcessor(user.UserType);
             User processedUser = processor.ProcessReward(user);
 

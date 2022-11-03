@@ -18,7 +18,7 @@ namespace Sat.Recruitment.Test.Tests.Infrastructure
             var dataSerializerMapper = AddFromInterface<IDataSerializerMapper<User>>();
 
             dataSerializerMapper.Setup(mock => mock.Serialize(fields))
-                .Returns(UserFactory.Valid);
+                .Returns(UserFactory.ValidUser);
 
             dataSerializerMapper.SetupGet(mock => mock.Separator).Returns(RecordHelper.Separator);
 
@@ -29,7 +29,7 @@ namespace Sat.Recruitment.Test.Tests.Infrastructure
 
             // Assertion
             act.Should().NotBeNull();
-            act.Should().BeEquivalentTo(UserFactory.Valid);
+            act.Should().BeEquivalentTo(UserFactory.ValidUser);
         }
 
 
@@ -42,7 +42,7 @@ namespace Sat.Recruitment.Test.Tests.Infrastructure
             var dataSerializerMapper = AddFromInterface<IDataSerializerMapper<User>>();
 
             dataSerializerMapper
-                .Setup(mock => mock.Deserialize(UserFactory.Valid))
+                .Setup(mock => mock.Deserialize(UserFactory.ValidUser))
                 .Returns(fields);
 
             dataSerializerMapper.SetupGet(mock => mock.Separator).Returns(RecordHelper.Separator);
@@ -50,7 +50,7 @@ namespace Sat.Recruitment.Test.Tests.Infrastructure
             var SUT = this.CreateSUT();
 
             // Action
-            string act = SUT.Deserialize(UserFactory.Valid);
+            string act = SUT.Deserialize(UserFactory.ValidUser);
 
             // Assertion
             act.Should().NotBeNull();

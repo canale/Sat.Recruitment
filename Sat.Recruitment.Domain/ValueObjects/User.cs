@@ -1,4 +1,5 @@
 ﻿using Sat.Recruitment.Domain.Enums;
+using Sat.Recruitment.Domain.Guards;
 
 namespace Sat.Recruitment.Domain.ValueObjects
 {
@@ -28,7 +29,9 @@ namespace Sat.Recruitment.Domain.ValueObjects
         /// <param name="percentage">Percentage of current Money that will be added to the User assets.</param>
         public User AddRewardByPercentage(decimal percentage)
         {
-            var reward = Money * percentage;
+            Guard.For(percentage).IsNegative();
+
+            var reward = Money * (percentage / 100);
             Money = Money + reward;
 
             return this;

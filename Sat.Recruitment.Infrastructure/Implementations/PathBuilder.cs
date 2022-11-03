@@ -15,28 +15,28 @@ namespace Sat.Recruitment.Infrastructure.Implementations
             _root = AppContext.BaseDirectory;
         }
 
-        public PathBuilder AddRoot(string root)
+        public IPathBuilder AddRoot(string root)
         {
             _root = root;
 
             return this;
         }
 
-        public PathBuilder AddFileName(string fileName)
+        public IPathBuilder AddFileName(string fileName)
         {
             _fileName = fileName;
 
             return this;
         }
 
-        public PathBuilder AddDirectory(string directory)
+        public IPathBuilder AddDirectory(string directory)
         {
             _directory = directory;
 
             return this;
         }
 
-        internal PathBuilder TrySetRoot(string root)
+        public IPathBuilder TrySetRoot(string root)
         {
             _root = string.IsNullOrEmpty(root) ? this._root : root;
             return this;
