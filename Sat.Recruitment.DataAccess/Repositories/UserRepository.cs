@@ -9,7 +9,8 @@ namespace Sat.Recruitment.DataAccess.Repositories
     {
         private readonly IDataLoader _dataLoader;
         private readonly IDataSerializer<User> _dataSerializer;
-        private readonly List<User> _users = new List<User>();
+        // TODO: Should be improved.
+        private static List<User> _users;
 
         public UserRepository(IDataLoader dataLoader, IDataSerializer<User> dataSerializer)
         {
@@ -25,15 +26,21 @@ namespace Sat.Recruitment.DataAccess.Repositories
 
         public User[] GetAll()
         {
-            _dataLoader.LoadData(reader =>
+            if (_users is null)
             {
-                while (reader.Peek() >= 0)
+                _users = new List<User>();
+
+                _dataLoader.LoadData(reader =>
                 {
-                    var line = reader.ReadLineAsync().Result;
-                    User user = _dataSerializer.Serialize(line);
-                    _users.Add(user);
-                }
-            });
+                    while (reader.Peek() >= 0)
+                    {
+                        var line = reader.ReadLineAsync().Result;
+                        User user = _dataSerializer.Serialize(line);
+
+                        _users.Add(user);
+                    }
+                });
+            }
 
             return _users.ToArray();
         }
